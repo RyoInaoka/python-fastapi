@@ -28,10 +28,11 @@ async def get_task(db: AsyncSession, task_id: int) -> Optional[task_model.Task]:
 
 async def update_task(
   db: AsyncSession,
-  task_create: task_schema.TaskCreate,
+  task_create: task_schema.TaskUpdate,
   original: task_model.Task
 ) -> task_model.Task:
   original.title = task_create.title
+  original.is_done = task_create.is_done
   db.add(original)
   await db.commit()
   await db.refresh(original)

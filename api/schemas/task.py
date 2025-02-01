@@ -7,8 +7,18 @@ class TaskBase(BaseModel):
 class TaskCreate(TaskBase):
   pass
 
+class TaskUpdate(TaskBase):
+  is_done: Optional[bool] = Field(False, description="完了したかどうか")
+
 class TaskCreateResponse(TaskCreate):
   id: int
+
+  class Config:
+    orm_mode = True
+
+class TaskUpdateResponse(TaskUpdate):
+  id: int
+  is_done: bool
 
   class Config:
     orm_mode = True
