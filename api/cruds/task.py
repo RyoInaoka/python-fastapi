@@ -1,3 +1,7 @@
+from typing import List, Tuple
+
+from sqlalchemy import select
+from sqlalchemy.engine import Result
 from sqlalchemy.ext.asyncio import AsyncSession
 
 import api.models.task as task_model
@@ -12,3 +16,7 @@ async def create_task(
   await db.commit()
   await db.refresh(task)
   return task
+
+async def get_tasks(db: AsyncSession) -> List[Tuple[task_model.Task]]:
+  result: Result = await db.execute(select(task_model.Task))
+  return result.scalars().all()
